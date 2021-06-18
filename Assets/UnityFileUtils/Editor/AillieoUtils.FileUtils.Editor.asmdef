@@ -1,0 +1,17 @@
+{
+    "name": "AillieoUtils.FileUtils.Editor",
+    "references": [
+        "AillieoUtils.FileUtils"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
