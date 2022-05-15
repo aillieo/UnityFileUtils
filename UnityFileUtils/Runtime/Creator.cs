@@ -88,6 +88,18 @@ namespace AillieoUtils
             {
                 return GetFileInfoForCreationWithIncreasingNumberSuffix(path)?.Create();
             }
+
+            public static bool EnsureDirectoryForFilepath(string path)
+            {
+                string directory = Path.GetDirectoryName(path);
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                    return true;
+                }
+                
+                return false;
+            }
         }
     }
 }
