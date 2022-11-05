@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -41,15 +41,17 @@ namespace AillieoUtils
             {
                 FileInfo fileInfo = new FileInfo(path);
                 EnsureDirectory(fileInfo.DirectoryName);
-                var list = fileInfo.Directory.EnumerateFiles().Where(config.filter).ToList();
-                list.Sort(config.comparer);
+                var filter = config.filter != null ? config.filter : RollConfig.DefaultFilter;
+                var list = fileInfo.Directory.EnumerateFiles().Where(filter).ToList();
+                var comparer = config.comparer != null ? config.comparer : RollConfig.DefaultComparer;
+                list.Sort(comparer);
                 int totalCount = list.Count;
                 long totalBytes = GetDirectorySize(fileInfo.DirectoryName);
                 int maxFileCount = Mathf.Max(config.maxFileCount, 0);
                 long maxBytes = Math.Max(config.maxBytes, 0);
                 if ((config.strategy & RollConfig.Strategy.FileCountLimit) > 0)
                 {
-                    while (totalCount > maxFileCount)
+                    while (totalCount > maxFileCount && list.Count > 0)
                     {
                         FileInfo toRemove = list[list.Count - 1];
                         list.RemoveAt(list.Count - 1);
@@ -57,9 +59,10 @@ namespace AillieoUtils
                         totalBytes -= toRemove.Length;
                     }
                 }
+
                 if ((config.strategy & RollConfig.Strategy.FileSizeLimit) > 0)
                 {
-                    while (totalBytes > maxBytes)
+                    while (totalBytes > maxBytes && list.Count > 0)
                     {
                         FileInfo toRemove = list[list.Count - 1];
                         list.RemoveAt(list.Count - 1);
@@ -67,6 +70,7 @@ namespace AillieoUtils
                         totalBytes -= toRemove.Length;
                     }
                 }
+
                 return Creator.GetFileInfoForCreation(path, Creator.CreateOnFileExistBehaviour.RenameNewFile);
             }
         }
