@@ -17,6 +17,7 @@ namespace AillieoUtils
                     obj = default;
                     return false;
                 }
+
                 IFormatter formatter = new BinaryFormatter();
                 using (Stream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
@@ -43,6 +44,7 @@ namespace AillieoUtils
                 {
                     formatter = new BinaryFormatter();
                 }
+
                 using (MemoryStream stream = new MemoryStream())
                 {
                     formatter.Serialize(stream, obj);
@@ -58,6 +60,7 @@ namespace AillieoUtils
                 {
                     formatter = new BinaryFormatter();
                 }
+
                 using (MemoryStream stream = new MemoryStream(byteArray))
                 {
                     T t = (T)formatter.Deserialize(stream);
@@ -67,5 +70,4 @@ namespace AillieoUtils
             }
         }
     }
-
 }
