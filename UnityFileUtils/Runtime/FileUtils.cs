@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -48,13 +49,14 @@ namespace AillieoUtils
             {
                 rawFileName = rawFileName.Replace(ch, '_');
             }
+
             return rawFileName;
         }
 
         public static void EnsureDirectory(string path)
         {
             //path = GetCleanPathStr(path);
-            if(!Directory.Exists(path))
+            if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
@@ -65,7 +67,7 @@ namespace AillieoUtils
             return File.Exists(path) || Directory.Exists(path);
         }
 
-        internal static string MakeUniqueNumberSuffix(string path, int existIndex = 0)
+        public static string MakeUniqueNumberSuffix(string path, int existIndex = 0)
         {
             FileInfo fileInfo = new FileInfo(path);
             if (!fileInfo.Exists)
@@ -92,7 +94,7 @@ namespace AillieoUtils
         {
             Regex regex = new Regex(@".+ ([\d]+)");
             Match match = regex.Match(Path.GetFileNameWithoutExtension(path));
-            if(match.Success)
+            if (match.Success)
             {
                 var numberGroup = match.Groups[1];
                 if (numberGroup.Success && int.TryParse(numberGroup.Value, out int num))
@@ -100,6 +102,7 @@ namespace AillieoUtils
                     return num;
                 }
             }
+
             return 0;
         }
 
@@ -107,7 +110,7 @@ namespace AillieoUtils
         {
             return path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar);
         }
-        
+
         public static void ClearDirectory(string path)
         {
             DirectoryInfo directory = new DirectoryInfo(path);
@@ -115,6 +118,7 @@ namespace AillieoUtils
             {
                 f.Delete();
             }
+
             foreach (DirectoryInfo d in directory.EnumerateDirectories())
             {
                 d.Delete(true);
@@ -163,6 +167,7 @@ namespace AillieoUtils
                     directoryInfo.GetDirectories(),
                     subDirectory => Interlocked.Add(ref totalBytes, GetDirectorySize(subDirectory, true)));
             }
+
             return totalBytes;
         }
 
@@ -172,7 +177,8 @@ namespace AillieoUtils
             {
                 return 0;
             }
-            return GetDirectorySize(new DirectoryInfo(path));
+
+            return GetDirectorySize(new DirectoryInfo(path), recursive);
         }
 
         public static string[] Split(string path)
@@ -205,13 +211,13 @@ namespace AillieoUtils
 
         public static string AddDateSuffix(string filename)
         {
-            string dateStr = DateTime.Now.ToString("yyyyMMdd");
+            string dateStr = DateTime.Now.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
             return AddFilenameSuffix(filename, dateStr);
         }
-        
+
         public static string AddTimeSuffix(string filename)
         {
-            string timeStr = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            string timeStr = DateTime.Now.ToString("yyyyMMddHHmmssfff", CultureInfo.InvariantCulture);
             return AddFilenameSuffix(filename, timeStr);
         }
     }

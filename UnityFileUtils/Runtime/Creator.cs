@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -37,6 +37,7 @@ namespace AillieoUtils
                             return GetFileInfoForCreationWithIncreasingNumberSuffix(path);
                     }
                 }
+
                 return file;
             }
 
@@ -97,7 +98,7 @@ namespace AillieoUtils
                     Directory.CreateDirectory(directory);
                     return true;
                 }
-                
+
                 return false;
             }
         }
