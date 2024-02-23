@@ -1,18 +1,21 @@
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using UnityEditor;
-using UnityEngine;
+// -----------------------------------------------------------------------
+// <copyright file="EditorFileUtils.cs" company="AillieoTech">
+// Copyright (c) AillieoTech. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace AillieoUtils
 {
+    using System.IO;
+    using UnityEditor;
+    using UnityEngine;
+
     public static class EditorFileUtils
     {
         public static string AssetPathToFilePath(string assetPath)
         {
             assetPath = FileUtils.GetCleanPathStr(assetPath);
-            return string.Format($"{Application.dataPath}/../{assetPath}");
+            return $"{Application.dataPath}/../{assetPath}";
         }
 
         public static string FilePathToAssetPath(string filePath)
@@ -22,6 +25,7 @@ namespace AillieoUtils
             {
                 return null;
             }
+
             return $"Assets/{filePath.Replace(Application.dataPath, string.Empty)}";
         }
 
@@ -42,6 +46,7 @@ namespace AillieoUtils
             {
                 return (File.GetAttributes(assetPath) & FileAttributes.ReadOnly) != 0;
             }
+
             return false;
         }
     }

@@ -1,11 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using UnityEngine;
+// -----------------------------------------------------------------------
+// <copyright file="Roller.cs" company="AillieoTech">
+// Copyright (c) AillieoTech. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace AillieoUtils
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using UnityEngine;
+
     public static partial class FileUtils
     {
         public static class Roller

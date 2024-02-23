@@ -1,10 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
+// -----------------------------------------------------------------------
+// <copyright file="Creator.cs" company="AillieoTech">
+// Copyright (c) AillieoTech. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace AillieoUtils
 {
+    using System.IO;
+    using UnityEngine;
+
     public static partial class FileUtils
     {
         public static class Creator

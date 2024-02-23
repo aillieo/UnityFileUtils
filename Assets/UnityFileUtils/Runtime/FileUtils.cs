@@ -1,16 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using UnityEngine;
+// -----------------------------------------------------------------------
+// <copyright file="FileUtils.cs" company="AillieoTech">
+// Copyright (c) AillieoTech. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace AillieoUtils
 {
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Security.Cryptography;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using UnityEngine;
+
     public static partial class FileUtils
     {
         private static readonly char[] invalidFileNameChars;
@@ -20,6 +24,15 @@ namespace AillieoUtils
         {
             invalidFileNameChars = Path.GetInvalidFileNameChars();
             invalidPathChars = Path.GetInvalidPathChars();
+        }
+
+        public static string GetPersistentPath(string folder)
+        {
+#if UNITY_EDITOR
+            return Path.Combine(Application.dataPath, "..", folder);
+#else
+            return Path.Combine(Application.persistentDataPath, folder);
+#endif
         }
 
         public static string GetCleanPathStr(string rawPath)
@@ -55,7 +68,7 @@ namespace AillieoUtils
 
         public static void EnsureDirectory(string path)
         {
-            //path = GetCleanPathStr(path);
+            // path = GetCleanPathStr(path);
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
